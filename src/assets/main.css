@@ -1,0 +1,62 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    background-image: linear-gradient(to bottom right, #3493ec, #f3f3f3); /* Adjust the colors as needed */
+    height: 100vh; /* Cover the entire height of the viewport */
+    width: 100vw; /* Cover the entire width of the viewport */
+  }
+  
+  
+
+
+.vue-tempalte {
+    color: #632abe;
+    background-color: rgb(196, 92, 168);
+    border-radius: 10px;
+    box-shadow: 10px 10px 5px rgb(127, 142, 146);
+    padding: 3%;
+    align-self: center;
+    justify-self: center;
+    margin-top: 6%;
+}
+
+h1 {
+    margin: 10px 0 0;
+    color: azure;
+}
+
+input {
+    width: 70%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border-color: plum;
+}
+
+.submit {
+    width: 30%;
+    border-radius: 4px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 2px 2px rgb(123, 211, 223);
+}
+
+.submit:hover {
+    background-color: #63b8da;
+    transition: 0.7s;
+}
