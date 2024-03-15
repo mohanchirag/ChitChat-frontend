@@ -1,6 +1,6 @@
 <template>
   <div class="login-page">
-    <h1 class="heading">Welcome to VueChat App</h1>
+    <h1 class="heading">Let's ChitChat</h1>
     <form class="form" name="login" @submit.prevent="authenticate">
       <h3>Sign In</h3>
       <div class="form-group">
@@ -27,9 +27,6 @@
         />
       </div>
       <button type="submit" class="submit">Sign In</button>
-      <p class="forgot-password">
-        <button @click="forgotPassword" class="forgot-pass">Forgot password?</button>
-      </p>
       <router-link to="/signupPage" class="signup-link">New User? Sign Up Here</router-link>
     </form>
   </div>
@@ -83,12 +80,13 @@ export default {
 /* Add your CSS styles here */
 .login-page {
   max-width: 400px;
-  margin: 7% auto; /* Adjust vertical margin to center vertically */
+  margin: 7% auto;
+  width: 35%; /* Adjust vertical margin to center vertically */
   padding: 20px;
-  border: 1px solid #0ab8af;
+  border: 1px solid #7547aa;
   border-radius: 5px;
-  background-image: linear-gradient(to bottom right, #c9f3c3, #9bd6ce); 
-  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.5); /* Add shadow */
+  background-image: linear-gradient(to bottom right, #c5c3c9, #60e6d4); 
+  box-shadow: 0px 0px 25px rgba(6, 3, 7, 0.849); /* Add shadow */
 }
 
 

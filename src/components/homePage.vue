@@ -9,8 +9,7 @@
     </div>
 
     <div class="content">
-      <div class="messages" ref="messagesContainer">
-        <h2 class="header">Messages</h2>
+      <div class="messages" id="messages" ref="messagesContainer">
         <ul class="message-list">
           <li
             v-for="message in messages"
@@ -26,8 +25,12 @@
       </div>
     </div>
     <div class="footer">
-      <h2>Send Message</h2>
-      <input type="text" v-model="newMessage" placeholder="Type a message..." />
+      <input
+        type="text"
+        v-model="newMessage"
+        @keyup.enter="sendMessage"
+        placeholder="Type a message..."
+      />
       <button @click="sendMessage">Send</button>
     </div>
   </div>
@@ -35,7 +38,7 @@
 
 <script>
 import axios from "axios";
-import config from '../config'
+import config from "../config";
 export default {
   name: "App",
   data() {
@@ -45,11 +48,11 @@ export default {
       isLoading: false,
       errorMessage: "",
       profileName: "",
-      serverUrl: config.baseurlApi
+      serverUrl: config.baseurlApi,
     };
   },
   mounted() {
-    console.log(this.serverUrl,"vjhvhjvjhv");
+    console.log(this.serverUrl, "vjhvhjvjhv");
     this.validateUser()
       .then(() => {
         // Call other methods once validateUser() completes successfully
@@ -71,24 +74,21 @@ export default {
         // Check if access token is present and not expired
         if (!accessToken) {
           // If access token is not present, redirect the user to the login page
-          alert('Please Log In First!')
-          this.$router.push('/');
+          alert("Please Log In First!");
+          this.$router.push("/");
           return; // Exit the function
         }
 
         // Call the /validateuser endpoint with access token
-        const response = await axios.post(
-          `${this.serverUrl}api/validateuser`,
-          {
-            accessToken,
-          }
-        );
+        const response = await axios.post(`${this.serverUrl}api/validateuser`, {
+          accessToken,
+        });
 
         // Handle response from the server
         if (response.data.success) {
           // User is validated, handle success scenario
           const userDetails = response.data.userDetails[0];
-          console.log(userDetails,"iuuigu");
+          console.log(userDetails, "iuuigu");
           const displayName = userDetails
             ? userDetails.displayName || "No_NAME"
             : "No_NAME";
@@ -100,21 +100,19 @@ export default {
         } else {
           // User is not validated, handle error scenario
           console.error("User validation failed:", response.data.error);
-          this.$router.push('/');
+          this.$router.push("/");
         }
       } catch (error) {
-        alert('Please Log In First!')
+        alert("Please Log In First!");
         console.error("Error validating user:", error);
-        this.$router.push('/');
+        this.$router.push("/");
         // Handle error scenario
       }
     },
     async getMessages() {
       this.isLoading = true;
       try {
-        const response = await axios.post(
-          `${this.serverUrl}api/getMessages`
-        );
+        const response = await axios.post(`${this.serverUrl}api/getMessages`);
         if (response.data.messages && response.data.messages.length > 0) {
           // Sort the array based on the timestamp
           response.data.messages.sort((a, b) => {
@@ -138,13 +136,10 @@ export default {
         return; // Don't send empty messages
       }
       try {
-        const response = await axios.post(
-          `${this.serverUrl}api/messages`,
-          {
-            sender: window.localStorage.getItem("username"), // You can change this to the actual user's name or ID
-            message: this.newMessage,
-          }
-        );
+        const response = await axios.post(`${this.serverUrl}api/messages`, {
+          sender: window.localStorage.getItem("username"), // You can change this to the actual user's name or ID
+          message: this.newMessage,
+        });
         console.log("Message sent:", response);
         this.newMessage = ""; // Clear the input field after sending message
         // Fetch messages again to update the list
@@ -156,17 +151,27 @@ export default {
       }
     },
     scrollToBottom() {
-      this.$nextTick(() => {
-        const messagesContainer = this.$refs.messagesContainer;
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-      });
-    },
+      setTimeout(() => {
+  var div = document.getElementById('messages');
+  div.scrollTop = div.innerHeight;
+}, 100);
+  this.$nextTick(() => {
+    const messagesContainer = this.$refs.messagesContainer;
+    if (messagesContainer) {
+      setTimeout(() => {
+      }, 100); // Adjust the delay as needed
+    } else {
+      console.error("messagesContainer ref not found");
+    }
+  });
+},
+
     logout() {
       // Clear profile name from local storage
       localStorage.removeItem("username");
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
-      this.$router.push('/');
+      this.$router.push("/");
       // Redirect to logout page or perform logout action
       // Example: window.location.href = '/logout';
     },
@@ -230,7 +235,7 @@ body {
 
 .message {
   padding: 10px;
-  border-bottom: 1px solid #ddd;
+  /* border-bottom: 1px solid #857e7e; */
   clear: both; /* Ensure each message appears on a new line */
 }
 
@@ -241,15 +246,18 @@ body {
 
 .message:not(.current-user) {
   text-align: right;
+  background-color: #e2f2fe; 
 }
 
 .footer {
+  display: flex; /* Use flexbox */
+  align-items: center; /* Align items vertically */
   background-color: #f0f0f0;
   padding: 20px;
 }
 
 .footer input[type="text"] {
-  width: calc(100% - 80px);
+  flex: 1; /* Take remaining space */
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;

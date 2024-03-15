@@ -15,7 +15,8 @@ body, html {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    background-image: linear-gradient(to bottom right, #3493ec, #f3f3f3); /* Adjust the colors as needed */
+    /* background-image: linear-gradient(to bottom right, #3493ec, #f3f3f3); Adjust the colors as needed */
+    background-image: url('./background.png');
     height: 100vh; /* Cover the entire height of the viewport */
     width: 100vw; /* Cover the entire width of the viewport */
   }

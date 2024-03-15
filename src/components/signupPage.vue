@@ -1,6 +1,6 @@
 <template>
   <div class="vue-template">
-    <h1 class="heading">Welcome to the Signup Page</h1>
+    <h1 class="heading">Let's ChitChat</h1>
     <form class="form" name="signup" @submit.prevent="signUp">
       <h3>Sign Up</h3>
       <div class="form-group">
@@ -17,6 +17,7 @@
       </div>
       <button type="submit" class="submit">Sign Up</button>
     </form>
+    <br>
     <router-link to="/">Already have an account? Sign In</router-link>
   </div>
 </template>
@@ -72,12 +73,13 @@ export default {
 <style scoped>
 /* Add your CSS styles here */
 .vue-template {
-  max-width: 400px;
-  margin: 7% auto; /* Adjust vertical margin to center vertically */
-  padding: 20px;
+  max-width: 500px;
+  width: 35%;
+  margin: 5% auto; /* Adjust vertical margin to center vertically */
+  padding: 30px;
   border: 1px solid #0ab8af;
   border-radius: 5px;
-  background-image: linear-gradient(to bottom right, #c9f3c3, #9bd6ce); 
+  background-image: linear-gradient(to bottom right, #c5c3c9, #60e6d4); 
   box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.5); /* Add shadow */
 }
 
