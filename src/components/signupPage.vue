@@ -23,6 +23,7 @@
 
 <script>
 import axios from 'axios';
+import config from '../config'
 
 export default {
   name: 'signupPage',
@@ -32,6 +33,7 @@ export default {
       email: '',
       password: '',
       rePassword: '',
+      serverUrl: config.baseurlApi
     };
   },
   methods: {
@@ -41,18 +43,19 @@ export default {
         return;
       }
       try {
-        const response = await axios.post('http://localhost:3000/signup', {
+        const response = await axios.post(`${this.serverUrl}signup`, {
           username: this.username,
           email: this.email,
           pass: this.password,
         });
+        console.log(this.serverUrl,"uiuyf");
         console.log('Signup response:', response.data);
         if (response.status === 200 && response.data.success) {
           // Success: Redirect to homepage or show success message
           window.localStorage.setItem('accessToken', response.data.userDetails.idToken);
           window.localStorage.setItem('refreshToken', response.data.userDetails.refreshToken);
           window.localStorage.setItem('username', response.data.userDetails.displayName || 'No_NAME');
-          window.location.replace('http://localhost:8080/homepage');
+          this.$router.push('/homePage');
         } else {
           // Error: Show error message
           alert(response.data.messages);

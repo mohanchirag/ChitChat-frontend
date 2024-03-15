@@ -37,19 +37,20 @@
 
 <script>
 import axios from 'axios';
-
+import config from '../config'
 export default {
   name: "loginPage",
   data() {
     return {
       username: "",
       password: "",
+      serverUrl: config.baseurlApi
     };
   },
   methods: {
     async authenticate() {
       try {
-        const response = await axios.post('http://localhost:3000/login', {
+        const response = await axios.post(`${this.serverUrl}login`, {
           user: this.username,
           pass: this.password
         });
@@ -60,7 +61,7 @@ export default {
           window.localStorage.setItem("refreshToken", response.data.userDetails.refreshToken);
           window.localStorage.setItem("username", response.data.userDetails.displayName || "No_NAME");
           // Redirect to homepage
-          this.$router.push('/homepage');
+          this.$router.push('/homePage');
         } else {
           // Authentication failed
           alert(response.data.messages || "Authentication failed. Please try again.");

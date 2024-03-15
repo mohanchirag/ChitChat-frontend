@@ -35,7 +35,7 @@
 
 <script>
 import axios from "axios";
-
+import config from '../config'
 export default {
   name: "App",
   data() {
@@ -45,9 +45,11 @@ export default {
       isLoading: false,
       errorMessage: "",
       profileName: "",
+      serverUrl: config.baseurlApi
     };
   },
   mounted() {
+    console.log(this.serverUrl,"vjhvhjvjhv");
     this.validateUser()
       .then(() => {
         // Call other methods once validateUser() completes successfully
@@ -70,13 +72,13 @@ export default {
         if (!accessToken) {
           // If access token is not present, redirect the user to the login page
           alert('Please Log In First!')
-          window.location.href = "http://localhost:8080/";
+          this.$router.push('/');
           return; // Exit the function
         }
 
         // Call the /validateuser endpoint with access token
         const response = await axios.post(
-          "http://localhost:3000/api/validateuser",
+          `${this.serverUrl}api/validateuser`,
           {
             accessToken,
           }
@@ -98,11 +100,12 @@ export default {
         } else {
           // User is not validated, handle error scenario
           console.error("User validation failed:", response.data.error);
-          window.location.href = "http://localhost:8080/";
+          this.$router.push('/');
         }
       } catch (error) {
         alert('Please Log In First!')
         console.error("Error validating user:", error);
+        this.$router.push('/');
         // Handle error scenario
       }
     },
@@ -110,7 +113,7 @@ export default {
       this.isLoading = true;
       try {
         const response = await axios.post(
-          "http://localhost:3000/api/getMessages"
+          `${this.serverUrl}api/getMessages`
         );
         if (response.data.messages && response.data.messages.length > 0) {
           // Sort the array based on the timestamp
@@ -136,7 +139,7 @@ export default {
       }
       try {
         const response = await axios.post(
-          "http://localhost:3000/api/messages",
+          `${this.serverUrl}api/messages`,
           {
             sender: window.localStorage.getItem("username"), // You can change this to the actual user's name or ID
             message: this.newMessage,
@@ -146,6 +149,7 @@ export default {
         this.newMessage = ""; // Clear the input field after sending message
         // Fetch messages again to update the list
         this.getMessages();
+        this.scrollToBottom();
       } catch (error) {
         console.error("Error sending message:", error);
         this.errorMessage = "Error sending message. Please try again.";
@@ -162,7 +166,7 @@ export default {
       localStorage.removeItem("username");
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
-      window.location.replace("http://localhost:8080/");
+      this.$router.push('/');
       // Redirect to logout page or perform logout action
       // Example: window.location.href = '/logout';
     },
